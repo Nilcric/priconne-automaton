@@ -58,10 +58,10 @@ class Align(Command):
 
     def __call__(self, device: uiautomator2.Device):
         if self.mode == 'N':
-            FindImage('img/normal.jpg', else_=Click(708, 83, delay=1.5), retry=3)(device)
+            FindImage('img/normal.jpg', else_=Click(708, 83, delay=Delay.loading), retry=5)(device)
             FindImage('img/normal.jpg', else_=Delay('进入主线NORMAL关卡失败，请手动进入！'), retry=True)(device)
         if self.mode == 'H':
-            FindImage('img/hard.jpg', else_=Click(830, 83, delay=1.5), retry=3)(device)
+            FindImage('img/hard.jpg', else_=Click(830, 83, delay=Delay.loading), retry=5)(device)
             FindImage('img/hard.jpg', else_=Delay('进入主线HARD关卡失败，请手动进入！'), retry=True)(device)
 
         map_index = None
