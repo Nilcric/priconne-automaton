@@ -204,6 +204,7 @@ class 主线关卡(Command):
         )(device)
 
         while True:
+            Click(0, 0)(device)
             Click(570, 210)(device)
             if FindImage('img/normal.jpg')(device):
                 break
