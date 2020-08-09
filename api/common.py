@@ -36,7 +36,6 @@ class 教程(Command):
                 self.count = 2
 
             def __call__(self, device: uiautomator2.Device):
-                print('[SkipBattle]', self.count)
                 if not self.count:
                     return False
 

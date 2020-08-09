@@ -99,9 +99,10 @@ class 扫荡(Command):
         self.levels = 关卡数
 
     def __call__(self, device: uiautomator2.Device):
-        print('[扫荡] 关卡 = %s%s-%s, 扫荡次数 = %s, 关卡数 = %s' % (self.mode, self.map, self.level, self.times, self.levels))
-
         Sequence(
+            Log(Log.INFO, '[扫荡] 关卡 = %s%s-%s, 扫荡次数 = %s, 关卡数 = %s' %
+                (self.mode, self.map, self.level, self.times, self.levels)),
+
             # 点击关卡
             Align(self.mode, self.map),
             Click(*MAP_POINTS[self.mode][self.map]),
@@ -142,7 +143,6 @@ class 挑战(Command):
         self.tutorial = 教程
 
     def __call__(self, device: uiautomator2.Device):
-        print('[挑战] 关卡 = %s%s-%s, 教程 = %s' % (self.mode, self.map, self.level, self.tutorial))
 
         def battle(device: uiautomator2.Device):
             FindImage('img/wanjiadengji.jpg', at=(233, 168, 340, 194), else_=Sequence(
@@ -161,6 +161,8 @@ class 挑战(Command):
                       else_=ClickImage('img/xiayibu.jpg', else_=Click(0, 0)), retry=5)(device)
 
         Sequence(
+            Log(Log.INFO, '[挑战] 关卡 = %s%s-%s, 教程 = %s' % (self.mode, self.map, self.level, self.tutorial)),
+
             # 点击关卡
             Align(self.mode, self.map),
             Click(*MAP_POINTS[self.mode][self.map]),
@@ -196,9 +198,9 @@ class 主线关卡(Command):
     挑战 = 挑战
 
     def __call__(self, device: uiautomator2.Device):
-        print('[主线关卡]')
 
         Sequence(
+            Log(Log.INFO, '[主线关卡]'),
             FindImage('new_img/main_quest.png', else_=Click(480, 539, delay=Delay.loading), retry=5),
             FindImage('new_img/main_quest.png', else_=Delay('进入冒险界面失败，请手动进入！'), retry=True),
         )(device)

@@ -18,9 +18,9 @@ class 体力(Command):
         self.x = 次数
 
     def __call__(self, device: uiautomator2.Device):
-        print('[体力] 次数 = %s' % self.x)
 
         s = Sequence(
+            Log(Log.INFO, '[体力] 次数 = %s' % self.x),
             Click(320, 31),
             ClickImage('img/ok.bmp'),
             ClickImage('img/zhandou_ok.jpg'),
@@ -43,7 +43,6 @@ class 玛那(Command):
         self.x = 次数
 
     def __call__(self, device: uiautomator2.Device):
-        print('[玛那] 次数 = %s' % self.x)
 
         s0 = Sequence(
             FindImage('img/quxiao2.jpg', else_=Click(0, 0), retry=True),
@@ -59,6 +58,7 @@ class 玛那(Command):
         )
 
         Sequence(
+            Log(Log.INFO, '[玛那] 次数 = %s' % self.x),
             home,
             Click(189, 62),
             *(s1 if i else s0 for i in range(self.x)),
@@ -73,9 +73,9 @@ class 经验药剂(Command):
     '''
 
     def __call__(self, device: uiautomator2.Device):
-        print('[经验药剂]')
 
         Sequence(
+            Log(Log.INFO, '[经验药剂]'),
             home,
             Click(617, 435, delay=Delay.network),
             FindImage('img/tongchang.jpg', else_=Click(0, 0), retry=3),
@@ -96,9 +96,9 @@ class 任务(Command):
     '''
 
     def __call__(self, device: uiautomator2.Device):
-        print('[任务]')
 
         Sequence(
+            Log(Log.INFO, '[任务]'),
             home,
             ClickImage('img/renwu.jpg', delay=Delay.network),
             Click(846, 437, delay=Delay.network),
@@ -112,9 +112,9 @@ class 礼物(Command):
     '''
 
     def __call__(self, device: uiautomator2.Device):
-        print('[礼物]')
 
         Sequence(
+            Log(Log.INFO, '[礼物]'),
             home,
             FindImage('img/shouqulvli.jpg', at=(98, 458, 199, 496), else_=Click(910, 434), retry=True),
             Click(811, 477),
@@ -136,7 +136,7 @@ class 我的主页(Command):
     礼物 = 礼物
 
     def __call__(self, device: uiautomator2.Device):
-        print('[我的主页]')
+        Log(Log.INFO, '[我的主页]')(device)
 
         t = 0
 

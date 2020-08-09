@@ -15,7 +15,7 @@ class 登录(Command):
         self.account, self.password = str(账号), str(密码)
 
     def __call__(self, device: uiautomator2.Device):
-        print('[登录] 账号 = %s, 密码 = %s' % (self.account, self.password))
+        Log(Log.INFO, '[登录] 账号 = %s, 密码 = %s' % (self.account, self.password))(device)
 
         try:
             while True:
@@ -27,7 +27,7 @@ class 登录(Command):
                     Click(0.965, 0.029)(device)
 
         except Exception as e:
-            print(e)
+            Log(Log.WARNING, e)
             time.sleep(Delay.loading)
 
         device(resourceId='com.bilibili.priconne:id/bsgamesdk_edit_username_login').click()
@@ -123,8 +123,8 @@ class 登出(Command):
     '''
 
     def __call__(self, device: uiautomator2.Device):
-        print('[登出]')
         Sequence(
+            Log(Log.INFO, '[登出]'),
             FindImage('img/bangzhu.bmp', else_=Click(871, 513, Delay.loading), retry=3),  # 主菜单
             FindImage('img/bangzhu.bmp', else_=Delay('进入主菜单失败，请主动点击'), retry=True),
             Click(165, 411, delay=Delay.loading),  # 退出账号

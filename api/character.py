@@ -45,8 +45,8 @@ class 自动强化(Command):
         self.x = 角色数
 
     def __call__(self, device: uiautomator2.Device):
-        print('[自动强化] 角色数 = %s' % self.x)
         Sequence(
+            Log(Log.INFO, '[自动强化] 角色数 = %s' % self.x),
             Delay(Delay.click),
             Click(210, 520, delay=Delay.loading*2),  # 进入角色页面
             Click(200, 160, delay=Delay.loading*2),  # 点击第一个角色

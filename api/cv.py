@@ -28,7 +28,6 @@ class UIMatcher:
         res = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
         _, max_val, _, max_loc = cv2.minMaxLoc(res)
 
-        # print('[where] %s, %s' % (template_path, max_val))
         if max_val >= threshold:
             x = x1 + max_loc[0] + tw // 2
             y = y1 + max_loc[1] + th // 2

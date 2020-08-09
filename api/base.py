@@ -1,10 +1,13 @@
+import os
+import sys
 import time
+import logging
 import uiautomator2
 
 from .cv import UIMatcher
 
 
-__all__ = ['Command', 'Delay', 'Click', 'FindImage', 'ClickImage', 'Sequence']
+__all__ = ['Command', 'Delay', 'Click', 'FindImage', 'ClickImage', 'Sequence', 'Log']
 
 
 class Command():
@@ -125,3 +128,38 @@ class Sequence(Command):
     def __call__(self, device: uiautomator2.Device):
         for arg in self.args:
             arg(device)
+
+
+class Log(Command):
+    '''
+    日志，分账号记录在文件中
+    '''
+
+    DEBUG = logging.DEBUG
+    INFO = logging.INFO
+    WARNING = logging.WARNING
+    ERROR = logging.ERROR
+    CRITICAL = logging.CRITICAL
+
+    def __init__(self, level, message):
+        self.level = level
+        self.message = message
+
+    def __call__(self, device: uiautomator2.Device):
+        name = device.username
+        logger = logging.getLogger(name)
+        if not logger.handlers:
+            os.makedirs('log', exist_ok=True)
+            formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(name)s: %(message)s')
+            file_handler = logging.FileHandler('log/%s.txt' % name, encoding='utf-8')
+            file_handler.setFormatter(formatter)
+            file_handler.setLevel(logging.INFO)
+            console_handler = logging.StreamHandler(sys.stdout)
+            console_handler.setFormatter(formatter)
+            console_handler.setLevel(logging.INFO)
+            logger.addHandler(file_handler)
+            logger.addHandler(console_handler)
+            logger.setLevel(logging.DEBUG)
+            logger.propagate = False
+
+        logger.log(self.level, self.message)
