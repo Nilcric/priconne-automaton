@@ -43,7 +43,7 @@ def thread(address: str, accounts: queue.Queue, function):
         try:
             username, password, note = accounts.get_nowait()
         except queue.Empty:
-            break
+            return
 
         # device.username = username
         # device.password = password
