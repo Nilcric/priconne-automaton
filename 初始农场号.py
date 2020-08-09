@@ -55,12 +55,12 @@ command = Sequence(
 )
 
 
-def function(device, username, password, note):
+def function(device):
     '''
     刷农场号无法直接到主页，无法用默认功能函数。
     '''
     Sequence(
-        登录(username, password),
+        登录(device.username, device.password),
         command,
         登出(),
     )(device)

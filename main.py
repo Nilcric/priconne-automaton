@@ -45,9 +45,9 @@ def thread(address: str, accounts: queue.Queue, function):
         except queue.Empty:
             return
 
-        # device.username = username
-        # device.password = password
-        # device.note = note
+        device.username = username
+        device.password = password
+        device.note = note
 
         if isinstance(function, Command):
             Sequence(
@@ -57,7 +57,7 @@ def thread(address: str, accounts: queue.Queue, function):
                 登出(),
             )(device)
         else:
-            function(device, username, password, note)
+            function(device)
 
 
 def run(function):
@@ -69,7 +69,7 @@ def run(function):
         t.start()
         threads.append(t)
     try:
-        while threading.active_count():
+        while threading.active_count() > 1:
             time.sleep(1)
     except KeyboardInterrupt:
         return
@@ -77,8 +77,5 @@ def run(function):
 
 if __name__ == '__main__':
     run(Sequence(
-        我的主页(),
-        我的主页.体力(3),
         主线关卡(),
-        主线关卡.扫荡('H10-1', 扫荡次数=3, 关卡数=9),
     ))
