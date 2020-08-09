@@ -203,12 +203,13 @@ class 主线关卡(Command):
             FindImage('new_img/main_quest.png', else_=Delay('进入冒险界面失败，请手动进入！'), retry=True),
         )(device)
 
-        while True:
+        t = 0
+        while t < 3:
+            ClickImage('new_img/main_quest.png')(device)
             Click(0, 0)(device)
-            Click(570, 210)(device)
-            if FindImage('img/normal.jpg')(device):
-                break
-            if FindImage('img/hard.jpg')(device):
-                break
+            if FindImage('img/normal.jpg')(device) or FindImage('img/hard.jpg')(device):
+                t += 1
+            else:
+                t = 0
 
         Delay(Delay.loading)(device)
