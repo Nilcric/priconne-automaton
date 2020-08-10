@@ -63,18 +63,19 @@ class FindImage(Command):
     默认不重试（即0次），无限重试请传入 retry=True
     '''
 
-    def __init__(self, image, at=None, if_=None, else_=None, retry=0):
+    def __init__(self, image, at=None, if_=None, else_=None, retry=0, threshold=None):
         self.image = image
         self.at = at
         self.if_ = if_
         self.else_ = else_
         self.retry = retry
+        self.threshold = threshold
 
     def __call__(self, device: uiautomator2.Device):
         attempt = 0
         while True:
             screenshot = device.screenshot(format='opencv')
-            if UIMatcher.where(screenshot, self.image, at=self.at):
+            if UIMatcher.where(screenshot, self.image, at=self.at, threshold=self.threshold):
                 if self.if_:
                     self.if_(device)
                 break
@@ -93,18 +94,19 @@ class ClickImage(Command):
     默认不重试（即0次），无限重试请传入 retry=True
     '''
 
-    def __init__(self, image, at=None, delay=True, else_=None, retry=0):
+    def __init__(self, image, at=None, delay=True, else_=None, retry=0, threshold=None):
         self.image = image
         self.at = at
         self.delay = delay
         self.else_ = else_
         self.retry = retry
+        self.threshold = threshold
 
     def __call__(self, device: uiautomator2.Device):
         attempt = 0
         while True:
             screenshot = device.screenshot(format='opencv')
-            point = UIMatcher.where(screenshot, self.image, at=self.at)
+            point = UIMatcher.where(screenshot, self.image, at=self.at, threshold=self.threshold)
             if point:
                 Click(*point, self.delay)(device)
                 break

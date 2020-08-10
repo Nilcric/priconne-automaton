@@ -25,9 +25,9 @@ def get_device_addresses():
 
 def get_accounts():
     accounts = queue.Queue()
-    with open('accounts.txt') as f:
+    with open('accounts.txt', encoding='utf-8') as f:
         for line in f:
-            match = re.match(r'(\S+)\s+(\S+)\s*(\S*)', line)
+            match = re.match(r'(\S+)\s+(\S+)\s*(.*)', line)
             if match:
                 account = match.groups()
                 accounts.put(account)
@@ -49,6 +49,8 @@ def thread(address: str, accounts: queue.Queue, function):
         device.password = password
         device.note = note
 
+        t = time.time()
+
         if isinstance(function, Command):
             Sequence(
                 登录(username, password),
@@ -58,6 +60,8 @@ def thread(address: str, accounts: queue.Queue, function):
             )(device)
         else:
             function(device)
+
+        Log(Log.INFO, '任务完成，用时 %s' % (time.time() - t))(device)
 
 
 def run(function):

@@ -5,7 +5,7 @@ import cv2
 class UIMatcher:
 
     @classmethod
-    def where(cls, screen, template_path, threshold=0.84, at=None):
+    def where(cls, screen, template_path, threshold=None, at=None):
         """
         在screen里寻找template，若找到则返回坐标，若没找到则返回False
         注：可以使用if where():  来判断图片是否存在
@@ -15,6 +15,7 @@ class UIMatcher:
         :param at: 缩小查找范围
         :return:
         """
+        threshold = threshold or 0.84
 
         if at is not None:
             x1, y1, x2, y2 = at
@@ -27,6 +28,8 @@ class UIMatcher:
         th, tw = template.shape[:2]  # rows->h, cols->w
         res = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
         _, max_val, _, max_loc = cv2.minMaxLoc(res)
+
+        # print(template_path, max_val)
 
         if max_val >= threshold:
             x = x1 + max_loc[0] + tw // 2

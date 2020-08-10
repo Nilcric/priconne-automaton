@@ -1,4 +1,5 @@
 import os
+import re
 import time
 import random
 import uiautomator2
@@ -93,15 +94,18 @@ class 扫荡(Command):
     '''
 
     def __init__(self, 关卡: str, 扫荡次数: int, 关卡数=1):
-        self.mode = 关卡[0]
-        self.map, self.level = [int(item) for item in 关卡[1:].split('-')]
+        self.mode, self.map, self.level = re.match(r'(N|H)(\d+)-(\d+)', 关卡.upper()).groups()
+        self.map = int(self.map)
+        self.level = int(self.level)
         self.times = 扫荡次数
         self.levels = 关卡数
 
+    def __str__(self):
+        return '扫荡(关卡=%s%s-%s, 扫荡次数=%s, 关卡数=%s)' % (self.mode, self.map, self.level, self.times, self.levels)
+
     def __call__(self, device: uiautomator2.Device):
         Sequence(
-            Log(Log.INFO, '[扫荡] 关卡 = %s%s-%s, 扫荡次数 = %s, 关卡数 = %s' %
-                (self.mode, self.map, self.level, self.times, self.levels)),
+            Log(Log.INFO, str(self)),
 
             # 点击关卡
             Align(self.mode, self.map),
