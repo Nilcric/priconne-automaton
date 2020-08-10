@@ -6,4 +6,3 @@ from .common import 教程, 设定
 from .character import 角色
 from .adventure import 主线关卡
 from .clan import 行会
-from .template import 扫荡模板
