@@ -24,7 +24,7 @@ class 登录(Command):
                 if device(resourceId='com.bilibili.priconne:id/bsgamesdk_id_welcome_change').exists():
                     device(resourceId='com.bilibili.priconne:id/bsgamesdk_id_welcome_change').click()
                 else:
-                    Click(0.965, 0.029)(device)
+                    Click(0, 0)(device)
 
         except Exception as e:
             Log(Log.WARNING, e)

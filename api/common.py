@@ -42,7 +42,7 @@ class 教程(Command):
         skip_battle = SkipBattle()
         t = 0
 
-        while t < 3:
+        while t < 2:
             Delay(Delay.loading)(device)
 
             # 点击引导

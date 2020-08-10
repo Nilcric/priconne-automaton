@@ -26,7 +26,7 @@ class Delay(Command):
 
     network = 2.5
     loading = 1.0
-    click = 0.01
+    click = 0.1
 
     def __init__(self, x):
         self.x = x

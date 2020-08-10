@@ -293,7 +293,7 @@ class 主线关卡(Command):
         )(device)
 
         t = 0
-        while t < 3:
+        while t < 2:
             ClickImage('new_img/main_quest.png')(device)
             Click(0, 0)(device)
             if FindImage('img/normal.jpg')(device) or FindImage('img/hard.jpg')(device):

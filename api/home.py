@@ -156,7 +156,7 @@ class 我的主页(Command):
 
         t = 0
 
-        while t < 3:
+        while t < 2:
             time.sleep(Delay.loading)
             screenshot = device.screenshot(format='opencv')
 

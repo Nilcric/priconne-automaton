@@ -27,6 +27,7 @@ def get_accounts():
     accounts = queue.Queue()
     with open('accounts.txt', encoding='utf-8') as f:
         for line in f:
+            line = line.split('#')[0]
             match = re.match(r'(\S+)\s+(\S+)\s*(.*)', line)
             if match:
                 account = match.groups()
@@ -61,7 +62,7 @@ def thread(address: str, accounts: queue.Queue, function):
         else:
             function(device)
 
-        Log(Log.INFO, '任务完成，用时 %s' % (time.time() - t))(device)
+        Log(Log.INFO, '任务完成，用时 %s' % int(time.time() - t))(device)
 
 
 def run(function):
