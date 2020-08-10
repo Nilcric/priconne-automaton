@@ -112,7 +112,6 @@ class 礼物(Command):
     '''
 
     def __call__(self, device: uiautomator2.Device):
-
         Sequence(
             Log(Log.INFO, '[礼物]'),
             home,
@@ -120,6 +119,22 @@ class 礼物(Command):
             Click(811, 477),
             ClickImage('img/ok.bmp', delay=Delay.network),
             Click(0, 0),
+            home,
+        )(device)
+
+
+class 公会之家(Command):
+    '''
+    公会之家领取全部收取。需要在我的主页调用，结束时返回主页。
+    '''
+
+    def __call__(self, device: uiautomator2.Device):
+        Sequence(
+            Log(Log.INFO, '[公会之家]'),
+            home,
+            FindImage('img/jyquanbushouqu.jpg', retry=3,
+                      if_=FindImage('img/guanbi.jpg', else_=Click(899, 429), retry=3),
+                      else_=Click(630, 539, delay=Delay.network)),
             home,
         )(device)
 
@@ -134,6 +149,7 @@ class 我的主页(Command):
     经验药剂 = 经验药剂
     任务 = 任务
     礼物 = 礼物
+    公会之家 = 公会之家
 
     def __call__(self, device: uiautomator2.Device):
         Log(Log.INFO, '[我的主页]')(device)

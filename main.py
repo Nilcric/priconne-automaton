@@ -73,9 +73,3 @@ def run(function):
             time.sleep(1)
     except KeyboardInterrupt:
         return
-
-
-if __name__ == '__main__':
-    run(Sequence(
-        主线关卡(),
-    ))

@@ -6,11 +6,6 @@ from .cv import UIMatcher
 from .base import *
 
 
-class 公会之家(Command):
-    '''
-    '''
-
-
 class 教程(Command):
     '''
     处理教程, 最终返回我的主页
