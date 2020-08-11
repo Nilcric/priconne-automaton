@@ -46,6 +46,7 @@ class 点赞(Command):
             Click(290, 305, delay=False),  # 全角色战力
             Click(590, 370, delay=Delay.loading),  # OK
             Click(830, 200),  # 给第一名点赞
+            ClickImage('img/ok.bmp'), # 点赞失败可能会需要点击 OK
             FindImage('img/hanghui.bmp', else_=Click(30, 30, delay=Delay.loading), retry=True),  # 返回行会
         )(device)
 

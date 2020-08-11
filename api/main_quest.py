@@ -224,10 +224,9 @@ class 扫荡模板(Command):
 
     def __call__(self, device: uiautomator2.Device):
         commands = []
-        if not self.note:
-            self.note = device.note
+        note = self.note or device.note
 
-        for arg in self.note.split():
+        for arg in note.split():
             try:
                 key, value = arg.split('=')
                 assert key == '扫荡'

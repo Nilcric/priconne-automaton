@@ -6,7 +6,7 @@ def function(device):
         return
 
     Sequence(
-        登录(device.username, device.password),
+        登录(),
         我的主页(),
         行会(),
         行会.捐赠(),

@@ -11,11 +11,18 @@ class 登录(Command):
     在游戏的标题页面处登录的逻辑
     '''
 
-    def __init__(self, 账号, 密码):
-        self.account, self.password = str(账号), str(密码)
+    def __init__(self, 账号=None, 密码=None):
+        self.username = 账号
+        self.password = 密码
+
+    def __str__(self):
+        return '登录(账号=%s, 密码=%s)' % (self.username, self.password)
 
     def __call__(self, device: uiautomator2.Device):
-        Log(Log.INFO, '[登录] 账号 = %s, 密码 = %s' % (self.account, self.password))(device)
+        username = self.username or device.username
+        password = self.password or device.password
+
+        Log(Log.INFO, str(self))(device)
 
         try:
             while True:
@@ -32,11 +39,11 @@ class 登录(Command):
 
         device(resourceId='com.bilibili.priconne:id/bsgamesdk_edit_username_login').click()
         device.clear_text()
-        device.send_keys(self.account)
+        device.send_keys(username)
 
         device(resourceId='com.bilibili.priconne:id/bsgamesdk_edit_password_login').click()
         device.clear_text()
-        device.send_keys(self.password)
+        device.send_keys(password)
 
         device(resourceId='com.bilibili.priconne:id/bsgamesdk_buttonLogin').click()
         time.sleep(Delay.network * 2)

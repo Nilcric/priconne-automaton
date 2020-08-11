@@ -9,7 +9,7 @@ MAP_POINTS = {
 }
 
 LEVEL_POINTS = {
-    0: [(670, 270), (540, 270)],
+    0: [(670, 270)],
 }
 
 
@@ -40,7 +40,7 @@ class 地下城(Command):
             ClickImage('img/dixiacheng.jpg')(device)
             Click(0, 0)(device)
 
-            if FindImage('img/yunhai.bmp')(device):
+            if FindImage('img/yunhai.bmp', threshold=0.8)(device):
                 t += 1
                 continue
 
@@ -49,14 +49,9 @@ class 地下城(Command):
 
             t = 0
 
-        # 可能会有教程跳脸
-        Delay(Delay.loading * 3)
-        while FindImage('img/kekeluo.bmp')(device):
-            Click(0, 0)(device)
-
         # 进入地图
         if not ClickImage('img/ok.bmp', delay=Delay.network + Delay.loading * 3,
-                          else_=Click(*MAP_POINTS[self.map]), retry=3)(device):
+                          else_=Click(*MAP_POINTS[self.map]), retry=6)(device):
             Sequence(
                 Log(Log.WARNING, '进入地下城地图失败，返回主页！'),
                 home,
