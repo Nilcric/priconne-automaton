@@ -1,0 +1,3 @@
+opencv-python -i https://pypi.tuna.tsinghua.edu.cn/simple/
+opencv-contrib-python -i https://pypi.tuna.tsinghua.edu.cn/simple/
+uiautomator2 -i https://mirrors.aliyun.com/pypi/simple/

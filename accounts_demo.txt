@@ -1,0 +1,5 @@
+username1 password1 扫荡=N10~N12*3
+username2 password2 扫荡=N10~N12*3,H10~H12*3
+username3 password3 扫荡=N1-1*100
+username4 password4 扫荡=N11-4~N12-3*6
+username6 password5
