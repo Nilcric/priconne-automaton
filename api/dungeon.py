@@ -2,6 +2,7 @@ import uiautomator2
 
 from .base import *
 from .home import home
+from .common import 教程
 
 
 MAP_POINTS = {
@@ -20,6 +21,7 @@ class 地下城(Command):
 
     进入地下城界面后，若上一次未挑战完毕将会自动撤退。
     请在我的主页调用进入地下城。请确保地下城已经开放。
+    TODO: 地下城进入时若有地下城币可能会有教程。
     '''
 
     def __init__(self, 地图=0):
@@ -62,7 +64,17 @@ class 地下城(Command):
 
         for i, point in enumerate(LEVEL_POINTS[self.map]):
             Click(*point)(device)
-            ClickImage('img/tiaozhan.bmp', delay=Delay.network, else_=Click(*point), retry=True)(device)
+
+            if not FindImage('img/tiaozhan.bmp', else_=Click(*point), retry=5)(device):
+                Sequence(
+                    教程(),
+                    FindImage('new_img/main_quest.png', else_=Click(480, 539, delay=Delay.loading), retry=5),
+                    FindImage('new_img/main_quest.png', else_=Delay('进入冒险界面失败，请手动进入！'), retry=True),
+                    ClickImage('img/dixiacheng.jpg', delay=Delay.network + Delay.loading)(device),
+                    FindImage('img/tiaozhan.bmp', else_=Click(*point), retry=True),
+                )(device)
+
+            ClickImage('img/tiaozhan.bmp', delay=Delay.network, retry=5)(device)
 
             if i == 0:  # 第一次需要选人
                 if self.map:
