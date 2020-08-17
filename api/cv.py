@@ -5,13 +5,13 @@ import cv2
 class UIMatcher:
 
     @classmethod
-    def where(cls, screen, template_path, threshold=None, at=None):
+    def where(cls, screen, template, threshold=None, at=None):
         """
         在screen里寻找template，若找到则返回坐标，若没找到则返回False
         注：可以使用if where():  来判断图片是否存在
         :param threshold:
         :param screen:
-        :param template_path:
+        :param template:
         :param at: 缩小查找范围
         :return:
         """
@@ -23,7 +23,10 @@ class UIMatcher:
         else:
             x1, y1 = 0, 0
 
-        template = cv2.imread(template_path)
+        try:
+            template = cv2.imread(template)
+        except:
+            pass
 
         th, tw = template.shape[:2]  # rows->h, cols->w
         res = cv2.matchTemplate(screen, template, cv2.TM_CCOEFF_NORMED)
@@ -69,3 +72,16 @@ class UIMatcher:
         # cv2.circle(screen, (index_1[1], index_1[0] + 63), 10, (255, 0, 0), -1)
 
         return num_of_white, int(index_1[1]), int(index_1[0] + 63)
+
+    characters = cv2.imread('new_img/characters.png')
+
+    @classmethod
+    def whois(cls, screen, x, y, size):
+        x1, y1, x2, y2 = x, y, x+size, y+size
+        screen = screen[y1:y2, x1:x2]
+        screen = cv2.resize(screen, (64, 64))
+        ans = cls.where(cls.characters, screen, threshold=0.4)
+        print(ans)
+        if not ans:
+            return 1000
+        return 1000 + ans[1] // 64
