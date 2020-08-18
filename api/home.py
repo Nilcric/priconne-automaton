@@ -163,9 +163,12 @@ class 我的主页(Command):
             if UIMatcher.where(screenshot, 'img/liwu.bmp', at=(891, 413, 930, 452)):
                 t += 1
 
-            if UIMatcher.where(screenshot, 'img/niudan_jiasu.jpg', at=(700, 0, 960, 100)):
+            if ClickImage('img/ok.bmp')(device):
+                # 下载
+                continue
+
+            if ClickImage('img/niudan_jiasu.jpg', at=(700, 0, 960, 100))(device):
                 # 跳过新角色登场
-                Click(893, 39)(device)
                 continue
 
             if UIMatcher.where(screenshot, 'img/jingsaikaishi.bmp', at=(755, 471, 922, 512)):
